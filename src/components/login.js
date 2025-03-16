@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom"; // Import navigation hook
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const LoginPage = () => {
+const LoginPage = ({onLogin}) => {
     const [formData, setFormData] = useState({ email: "", password: "" });
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
@@ -36,11 +36,7 @@ const LoginPage = () => {
         console.log("User role:", localStorage.getItem("role"));
 
         // Redirect based on role
-        if (data.user.role === "admin") {
-            navigate("/admin");
-        } else {
-            navigate("/home");
-        }
+       onLogin(); 
     } catch (err) {
         console.error("Login error:", err);
         setError(err.message);

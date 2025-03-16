@@ -2,17 +2,13 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const Home = () => {
+const Home = ({handleLogout}) => {
     const [prompt, setPrompt] = useState("");
     const [audioUrl, setAudioUrl] = useState(null);
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
-    useEffect(() => {
-        if (!localStorage.getItem("token")) {
-            navigate("/");
-        }
-    }, [navigate]);
+    
 
     const handleGenerateMusic = async () => {
         if (!prompt) {
@@ -44,17 +40,19 @@ const Home = () => {
         }
     };
 
-    const handleLogout = async () => {
+    const handleLogout1 = async () => {
         try {
             await fetch("http://localhost:5000/logout", {
-                method: "POST",
-                credentials: "include",
+                method: "POST"
+               
             });
+            
+            handleLogout();
+           
         } catch (error) {
             console.error("Logout failed:", error);
         }
-        localStorage.removeItem("token");
-        navigate("/");
+        
     };
 
     return (
@@ -85,7 +83,7 @@ const Home = () => {
                 </audio>
             )}
 
-            <button className="btn btn-danger mt-4" onClick={handleLogout}>
+            <button className="btn btn-danger mt-4" onClick={handleLogout1}>
                 Logout
             </button>
         </div>

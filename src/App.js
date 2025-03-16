@@ -1,21 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
-import { Routes, Route, Link } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import { useEffect, useState } from "react";
 import Home from './components/home';
 import LoginPage from './components/login';
 
 function App() {
-  return (
-    <>
-      
+    const [authenticated, setAuthenticated] = useState(!!localStorage.getItem("token"));
 
-      <Routes>
-        <Route path="/" element={<LoginPage />} />
-        <Route path="*" element={<h1>404: Not Found</h1>} />
-      </Routes>
-    </>
+    const handleLogin = (token) => {
+        localStorage.setItem("token", token);
+        setAuthenticated(true);
+    };
 
-  );
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        setAuthenticated(false);
+    };
+
+    useEffect(() => {
+        setAuthenticated(!!localStorage.getItem("token"));
+    }, []);
+
+    return (
+        <Routes>
+            <Route path="/" element={!authenticated ? <LoginPage onLogin={handleLogin} /> : <Navigate to="/home" />} />
+            <Route path="/home" element={authenticated ? <Home handleLogout={handleLogout} /> : <Navigate to="/" />} />
+            <Route path="*" element={<h1>404: Not Found</h1>} />
+        </Routes>
+    );
 }
 
 export default App;

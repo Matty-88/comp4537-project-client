@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
+const SERVER_RENDER = "https://comp4537-project-server.onrender.com";
+
 const AdminPage = ({ handleLogout }) => {
     const [prompt, setPrompt] = useState("");
     const [audioUrl, setAudioUrl] = useState(null);
@@ -16,7 +18,7 @@ const AdminPage = ({ handleLogout }) => {
 
         setLoading(true);
         try {
-            const response = await fetch("http://localhost:5000/generate-music", {
+            const response = await fetch(`${SERVER_RENDER}/generate-music`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -26,7 +28,7 @@ const AdminPage = ({ handleLogout }) => {
 
             const data = await response.json();
             if (data.file) {
-                setAudioUrl(`http://localhost:5001/${data.file}`);
+                setAudioUrl(`${SERVER_RENDER}/${data.file}`);
             } else {
                 alert("Music generation failed.");
             }

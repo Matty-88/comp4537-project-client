@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
+const SERVER_RENDER = "https://comp4537-project-server.onrender.com";
+
 
 const Home = ({handleLogout}) => {
     const [prompt, setPrompt] = useState("");
@@ -18,7 +20,7 @@ const Home = ({handleLogout}) => {
 
         setLoading(true);
         try {
-            const response = await fetch("http://localhost:5000/generate-music", {
+            const response = await fetch(`${SERVER_RENDER}/generate-music`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -28,7 +30,7 @@ const Home = ({handleLogout}) => {
 
             const data = await response.json();
             if (data.file) {
-                setAudioUrl(`http://localhost:5001/${data.file}`);
+                setAudioUrl(`${SERVER_RENDER}/${data.file}`);
             } else {
                 alert("Music generation failed.");
             }
@@ -42,7 +44,7 @@ const Home = ({handleLogout}) => {
 
     const handleLogout1 = async () => {
         try {
-            await fetch("http://localhost:5000/logout", {
+            await fetch(`${SERVER_RENDER}/logout`, {
                 method: "POST"
                
             });

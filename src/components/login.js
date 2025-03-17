@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom"; // Import navigation hook
 import "bootstrap/dist/css/bootstrap.min.css";
 
+const SERVER_RENDER = "https://comp4537-project-server.onrender.com";
+
+
 const LoginPage = ({onLogin}) => {
     const [formData, setFormData] = useState({ email: "", password: "" });
     const [error, setError] = useState("");
@@ -18,7 +21,7 @@ const LoginPage = ({onLogin}) => {
     setLoading(true);
 
     try {
-        const response = await fetch("http://localhost:5000/login", {
+        const response = await fetch(`${SERVER_RENDER}/login`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(formData),

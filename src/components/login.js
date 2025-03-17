@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom"; // Import navigation hook
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const SERVER_RENDER = "https://comp4537-project-server.onrender.com";
+const SERVER_RENDER = "https://newservercomp4something.onrender.com";
 
 
 const LoginPage = ({onLogin}) => {

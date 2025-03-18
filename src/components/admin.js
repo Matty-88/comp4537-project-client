@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const SERVER_RENDER = "http://localhost:5000";
+const SERVER_RENDER = "https://newservercomp4something.onrender.com";
 
 const AdminPage = ({ handleLogout }) => {
     const [prompt, setPrompt] = useState("");

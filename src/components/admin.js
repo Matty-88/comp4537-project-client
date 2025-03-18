@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const SERVER_RENDER = "https://newservercomp4something.onrender.com";
+const SERVER_RENDER = "http://localhost:5000";
 
 const AdminPage = ({ handleLogout }) => {
     const [prompt, setPrompt] = useState("");
@@ -11,34 +11,34 @@ const AdminPage = ({ handleLogout }) => {
     const navigate = useNavigate();
 
     const handleGenerateMusic = async () => {
-        if (!prompt) {
-            alert("Please enter a description for the music.");
-            return;
-        }
-
-        setLoading(true);
         try {
+            if (!prompt) return;
+    
             const response = await fetch(`${SERVER_RENDER}/generate-music`, {
-                method: "POST",
+                method: 'POST',
                 headers: {
-                    "Content-Type": "application/json",
+                    'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ prompt }),
             });
-
-            const data = await response.json();
-            if (data.file) {
-                setAudioUrl(`${SERVER_RENDER}/${data.file}`);
-            } else {
-                alert("Music generation failed.");
-            }
+    
+            if (!response.ok) throw new Error('Failed to generate audio.');
+    
+            // Directly handle audio blob
+            const audioBlob = await response.blob();
+            const audioUrl = URL.createObjectURL(audioBlob);
+            
+            setAudioUrl(audioUrl);
+    
+            // Optionally play audio immediately
+            const audio = new Audio(audioUrl);
+            // audio.play();
+    
         } catch (error) {
             console.error("Music generation error:", error);
-            alert("Error generating music.");
-        } finally {
-            setLoading(false);
         }
     };
+    
 
     const logout = () => {
         handleLogout();

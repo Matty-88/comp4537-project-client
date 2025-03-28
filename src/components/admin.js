@@ -2,18 +2,30 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
+//state is object that holds data about a component, allows components to remember into across renders
+
 const SERVER_RENDER = "https://newservercomp4something.onrender.com";
 
+//prop is passed from parent 
 const AdminPage = ({ handleLogout }) => {
+
+    //allows components to manage state = useState
+    //stores user input, updtaes
     const [prompt, setPrompt] = useState("");
+
+    //url of generated audio
     const [audioUrl, setAudioUrl] = useState(null);
+
+
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
+    //send request to generate music 
     const handleGenerateMusic = async () => {
         try {
             if (!prompt) return;
     
+            //http request
             const response = await fetch(`${SERVER_RENDER}/generate-music`, {
                 method: 'POST',
                 headers: {
@@ -24,8 +36,10 @@ const AdminPage = ({ handleLogout }) => {
     
             if (!response.ok) throw new Error('Failed to generate audio.');
     
-            // Directly handle audio blob
+            //converts server repsonts into binary object (blob), represents audio/ video/ images that can be handles by browser
             const audioBlob = await response.blob();
+
+            //creates temp url that points to the blob sotred in memory, dont need to save the audio file, plays it in browser 
             const audioUrl = URL.createObjectURL(audioBlob);
             
             setAudioUrl(audioUrl);
@@ -66,6 +80,7 @@ const AdminPage = ({ handleLogout }) => {
                 {loading ? "Generating..." : "Generate Music"}
             </button>
 
+            
             {audioUrl && (
                 <audio controls className="mt-3">
                     <source src={audioUrl} type="audio/wav" />

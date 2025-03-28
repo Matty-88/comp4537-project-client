@@ -4,19 +4,29 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 const SERVER_RENDER = "https://newservercomp4something.onrender.com";
 
-
+//prop login
 const LoginPage = ({onLogin}) => {
+
+    //stores user input for email and password
     const [formData, setFormData] = useState({ email: "", password: "" });
+
+    //login error messages
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
-    const navigate = useNavigate(); // Initialize navigation
+    const navigate = useNavigate(); 
 
+    //e that triggers the function when user types 
     const handleChange = (e) => {
+        //keeps the existing values of formData instead of overwriteing it ...
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
+    //when user clicks login
     const handleSubmit = async (e) => {
+    //prevents the page from being refereeshed so we can handle with javascript
     e.preventDefault();
+
+    //clears prev error
     setError("");
     setLoading(true);
 
@@ -27,18 +37,24 @@ const LoginPage = ({onLogin}) => {
             body: JSON.stringify(formData),
         });
 
+        //converts respons into javascript object
         const data = await response.json();
-        console.log("Login response:", data); // Debugging
+        console.log("Login response:", data); 
 
         if (!response.ok) {
             throw new Error(data.error || "Login failed");
         }
 
+        //store token in local storage to keep user loggin in after refresh
         localStorage.setItem("token", data.token);
+
+
         localStorage.setItem("role", data.user.role); // Save role
         console.log("User role:", localStorage.getItem("role"));
 
-        // Redirect based on role
+        // marks as logged in
+        //sotre role
+        //redirects 
        onLogin(); 
     } catch (err) {
         console.error("Login error:", err);

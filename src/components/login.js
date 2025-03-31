@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom"; // Import navigation hook
 import "bootstrap/dist/css/bootstrap.min.css";
+import messages from "../components/messages";
 
-const SERVER_RENDER = "https://newservercomp4something.onrender.com";
+
+const SERVER_RENDER = "https://newservercomp4something.onrender.com/v1";
 
 //prop login
 const LoginPage = ({onLogin}) => {
@@ -40,10 +42,10 @@ const LoginPage = ({onLogin}) => {
 
         //converts respons into javascript object
         const data = await response.json();
-        console.log("Login response:", data); 
+   
 
         if (!response.ok) {
-            throw new Error(data.error || "Login failed");
+            throw new Error(data.error || messages.loginFailed);
         }
 
         //store token in local storage to keep user loggin in after refresh
@@ -51,7 +53,7 @@ const LoginPage = ({onLogin}) => {
 
 
         localStorage.setItem("role", data.user.role); // Save role
-        console.log("User role:", localStorage.getItem("role"));
+       
 
         // marks as logged in
         //sotre role

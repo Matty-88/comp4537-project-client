@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-const SERVER_RENDER = "https://newservercomp4something.onrender.com";
+const SERVER_RENDER = "https://newservercomp4something.onrender.com/v1";
+import messages from "../components/messages";
 
 
 const Home = ({handleLogout}) => {
@@ -23,7 +24,7 @@ const Home = ({handleLogout}) => {
                     credentials: "include",
                 });
     
-                if (!response.ok) throw new Error("Failed to fetch profile");
+                if (!response.ok) throw new Error(messages.apiFetchFail);
     
                 const data = await response.json();
                 setUser(data.user);
@@ -31,12 +32,12 @@ const Home = ({handleLogout}) => {
 
                 // Show alert if user reached 20 API calls
                 if (data.user.api_calls >= 20) {
-                    alert("You have reached your limit of 20 free API calls.");
+                    alert(messages.apiLimitReached);
                 }
 
             } catch (err) {
-                console.error("Profile fetch error:", err);
-                setError("Could not load user info.");
+                console.error(messages.profileFetchError, err);
+                setError(messages.notLoadUserInfo);
             }
         };
     
@@ -54,7 +55,7 @@ const Home = ({handleLogout}) => {
 
     const handleGenerateMusic = async () => {
         if (!prompt) {
-            alert("Please enter a description for the music.");
+            alert(messages.enterMusicDesc);
             return;
         }
 
@@ -70,7 +71,7 @@ const Home = ({handleLogout}) => {
 
             if (!response.ok) {
                 const errorText = await response.text(); // Catch non-JSON errors like HTML
-                throw new Error("Music generation failed: " + errorText);
+                throw new Error(messages.musicGenerationError + errorText);
               }
           
               const audioBlob = await response.blob();
@@ -78,8 +79,8 @@ const Home = ({handleLogout}) => {
               setAudioUrl(audioUrl);
           
             } catch (error) {
-              console.error("Music generation error:", error);
-              alert("Music generation failed: " + error.message);
+              console.error(messages.musicGenerationError, error);
+              alert(messages.musicGenerationError + error.message);
             } finally {
               setLoading(false);
             }
@@ -95,7 +96,7 @@ const Home = ({handleLogout}) => {
             handleLogout();
            
         } catch (error) {
-            console.error("Logout failed:", error);
+            console.error(messages.logoutFailed, error);
         }
         
     };
@@ -127,7 +128,7 @@ const Home = ({handleLogout}) => {
                 onClick={handleGenerateMusic}
                 disabled={loading}
             >
-                {loading ? "Generating..." : "Generate Music"}
+                {loading ? messages.generating : messages.genMusic}
             </button>
 
             {audioUrl && (

@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import messages from "../components/messages"
+import messages from "../components/messages";
 
 //state is object that holds data about a component, allows components to remember into across renders
 
-const SERVER_RENDER = "https://newservercomp4something.onrender.com";
+const SERVER_RENDER = "https://newservercomp4something.onrender.com/v1";
 
 //prop is passed from parent 
 const AdminPage = ({ handleLogout }) => {
@@ -158,7 +158,7 @@ const AdminPage = ({ handleLogout }) => {
     return (
         <div className="container py-5" style={{ maxHeight: "100vh", overflowY: "auto" }}>
             <div className="text-center mb-4">
-                <h1>messages.adminHeader</h1>
+                <h1>Admin Dashboard - AI Music Generator</h1>
             </div>
     
             {/* Music Generation Section */}
@@ -166,7 +166,7 @@ const AdminPage = ({ handleLogout }) => {
                 <input
                     type="text"
                     className="form-control mb-3"
-                    placeholder={messages.describeMusic}
+                    placeholder="Describe the music..."
                     value={prompt}
                     onChange={(e) => setPrompt(e.target.value)}
                     style={{ maxWidth: "400px" }}
@@ -177,7 +177,7 @@ const AdminPage = ({ handleLogout }) => {
                     onClick={handleGenerateMusic}
                     disabled={loading}
                 >
-                    {loading ? "Generating..." : "Generate Music"}
+                    {loading ? messages.generating : messages.genMusic}
                 </button>
     
                 {audioUrl && (

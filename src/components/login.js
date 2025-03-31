@@ -33,7 +33,7 @@ const LoginPage = ({onLogin}) => {
     setLoading(true);
 
     try {
-        const response = await fetch(`${SERVER_RENDER}/login`, {
+        const response = await fetch(`${SERVER_RENDER}/auth/login`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             credentials: "include", // Include cookies in the request

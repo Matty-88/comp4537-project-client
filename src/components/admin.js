@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
+import messages from "../components/messages"
 
 //state is object that holds data about a component, allows components to remember into across renders
 
@@ -33,12 +34,12 @@ const AdminPage = ({ handleLogout }) => {
                     method: "GET",
                     credentials: "include",
                 });
-                if (!response.ok) throw new Error("Failed to fetch API stats");
+                if (!response.ok) throw new Error(messages.apiFetchFail);
                 const data = await response.json();
                 setApiStats(data);
             } catch (err) {
-                console.error("API stats fetch error:", err);
-                setError("Unable to load API usage data.");
+                console.error(messages.apiFetchFail, err);
+                setError(messages.noAPILoad);
             }
         };
     
@@ -88,7 +89,7 @@ const AdminPage = ({ handleLogout }) => {
                 alert(data.message);
             } catch (error) {
                 console.error(error);
-                alert("Patch failed: " + error.message);
+                alert(messages.patchFail + error.message);
             }
         };
 
@@ -107,8 +108,8 @@ const AdminPage = ({ handleLogout }) => {
                 const data = await response.json();
                 alert(data.message);
             } catch (error) {
-                console.error("Delete failed:", error);
-                alert("Delete failed: " + error.message);
+                console.error(messages.deleteFail, error);
+                alert(messages.deleteFail + error.message);
             }
         };
         
@@ -130,7 +131,7 @@ const AdminPage = ({ handleLogout }) => {
                 body: JSON.stringify({ prompt }),
             });
     
-            if (!response.ok) throw new Error('Failed to generate audio.');
+            if (!response.ok) throw new Error(messages.musicGenerationError);
     
             //converts server repsonts into binary object (blob), represents audio/ video/ images that can be handles by browser
             const audioBlob = await response.blob();
@@ -145,7 +146,7 @@ const AdminPage = ({ handleLogout }) => {
             // audio.play();
     
         } catch (error) {
-            console.error("Music generation error:", error);
+            console.error(messages.musicGenerationError, error);
         }
     };
     
@@ -157,7 +158,7 @@ const AdminPage = ({ handleLogout }) => {
     return (
         <div className="container py-5" style={{ maxHeight: "100vh", overflowY: "auto" }}>
             <div className="text-center mb-4">
-                <h1>Admin Dashboard - AI Music Generator</h1>
+                <h1>messages.adminHeader</h1>
             </div>
     
             {/* Music Generation Section */}
@@ -165,7 +166,7 @@ const AdminPage = ({ handleLogout }) => {
                 <input
                     type="text"
                     className="form-control mb-3"
-                    placeholder="Describe the music..."
+                    placeholder={messages.describeMusic}
                     value={prompt}
                     onChange={(e) => setPrompt(e.target.value)}
                     style={{ maxWidth: "400px" }}

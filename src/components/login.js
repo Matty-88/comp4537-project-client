@@ -34,6 +34,7 @@ const LoginPage = ({onLogin}) => {
         const response = await fetch(`${SERVER_RENDER}/login`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
+            credentials: "include", // Include cookies in the request
             body: JSON.stringify(formData),
         });
 

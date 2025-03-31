@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
+const url = "https://newservercomp4something.onrender.com";
+
 const RegisterPage = () => {
     const [formData, setFormData] = useState({
         name: "",
@@ -16,10 +18,37 @@ const RegisterPage = () => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("Form submitted:", formData);
+    
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    
+        if (!emailRegex.test(formData.email)) {
+            alert("Please enter a valid email address.");
+            return;
+        }
+    
+        try {
+            const response = await fetch("http://localhost:5000/add-user", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(formData),
+            });
+    
+            if (!response.ok) {
+                const errorData = await response.json();
+                console.error("Registration error:", errorData.error);
+                return;
+            }
+    
+            alert("Registration successful! You can now log in.");
+            navigate("/");
+        } catch (error) {
+            console.error("Error during registration:", error);
+            alert("Registration failed, please try again.");
+        }
     };
+    
 
     return (
         <div className="container d-flex flex-column align-items-center justify-content-center vh-100">
@@ -67,21 +96,6 @@ const RegisterPage = () => {
                         required
                     />
                 </div>
-
-               
-                <div className="mb-3">
-                    <label className="form-label">Role</label>
-                    <select
-                        name="role"
-                        className="form-select"
-                        value={formData.role}
-                        onChange={handleChange}
-                    >
-                        <option value="user">User</option>
-                        <option value="admin">Admin</option>
-                    </select>
-                </div>
-
                
                 <button type="submit" className="btn btn-primary w-100">
                     Register

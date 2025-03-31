@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import messages from "../components/messages";
+import messages from "./components/messages";
 
 
-const url = "https://newservercomp4something.onrender.com";
+const url = "https://newservercomp4something.onrender.com/v1";
 
 const RegisterPage = () => {
     const [formData, setFormData] = useState({

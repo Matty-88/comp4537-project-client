@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import messages from "../components/messages";
+import messages from "./components/messages";
 
 //state is object that holds data about a component, allows components to remember into across renders
 

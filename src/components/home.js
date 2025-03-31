@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import messages from "./components/messages";
+import messages from "../components/messages";
 const SERVER_RENDER = "https://newservercomp4something.onrender.com/v1";
 
 

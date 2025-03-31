@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
+import messages from "../components/messages";
+
 
 const url = "https://newservercomp4something.onrender.com";
 
@@ -24,7 +26,7 @@ const RegisterPage = () => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     
         if (!emailRegex.test(formData.email)) {
-            alert("Please enter a valid email address.");
+            alert(messages.validEmail);
             return;
         }
     
@@ -37,15 +39,15 @@ const RegisterPage = () => {
     
             if (!response.ok) {
                 const errorData = await response.json();
-                console.error("Registration error:", errorData.error);
+                console.error(messages.registrationError, errorData.error);
                 return;
             }
     
-            alert("Registration successful! You can now log in.");
+            alert(messages.registrationSuccess);
             navigate("/");
         } catch (error) {
-            console.error("Error during registration:", error);
-            alert("Registration failed, please try again.");
+            console.error(messages.registrationError, error);
+            alert(messages.registrationError);
         }
     };
     

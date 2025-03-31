@@ -29,7 +29,7 @@ const RegisterPage = () => {
         }
     
         try {
-            const response = await fetch(`${SERVER_RENDER}/add-user`, {
+            const response = await fetch(`${url}/add-user`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(formData),

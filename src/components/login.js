@@ -103,6 +103,12 @@ const LoginPage = ({onLogin}) => {
                     <button type="submit" className="btn btn-primary w-100" disabled={loading}>
                         {loading ? "Logging in..." : "Login"}
                     </button>
+                    <button
+                        className="btn btn-link mt-3"
+                        onClick={() => navigate("/register")}
+                        >
+                        Don't have an account? Register
+                    </button>
                 </form>
             </div>
         </div>

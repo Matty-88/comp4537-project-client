@@ -123,7 +123,7 @@ const AdminPage = ({ handleLogout }) => {
             if (!prompt) return;
     
             //http request
-            const response = await fetch(`${SERVER_RENDER}/music/generate-music`, {
+            const response = await fetch(`${SERVER_RENDER}/generate-music`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

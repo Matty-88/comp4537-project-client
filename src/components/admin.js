@@ -50,7 +50,7 @@ const AdminPage = ({ handleLogout }) => {
         // PUT method
         const updateUser = async () => {
             try {
-                const response = await fetch(`${SERVER_RENDER}/users/${userId}`, {
+                const response = await fetch(`${SERVER_RENDER}/user/${userId}`, {
                     method: "PUT",
                     headers: { "Content-Type": "application/json" },
                     credentials: "include",
@@ -73,7 +73,7 @@ const AdminPage = ({ handleLogout }) => {
         // PATCH method
         const patchUserName = async () => {
             try {
-                const response = await fetch(`${SERVER_RENDER}/users/${userId}`, {
+                const response = await fetch(`${SERVER_RENDER}/user/${userId}`, {
                     method: "PATCH",
                     headers: { "Content-Type": "application/json" },
                     credentials: "include",
@@ -95,7 +95,7 @@ const AdminPage = ({ handleLogout }) => {
 
         const deleteUser = async () => {
             try {
-                const response = await fetch(`${SERVER_RENDER}/users/${userId}`, {
+                const response = await fetch(`${SERVER_RENDER}/user/${userId}`, {
                     method: "DELETE",
                     credentials: "include",
                 });

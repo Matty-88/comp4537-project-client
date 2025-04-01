@@ -31,7 +31,7 @@ const RegisterPage = () => {
         }
     
         try {
-            const response = await fetch(`${url}/auth/add-user`, {
+            const response = await fetch(`${url}/user/add-user`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(formData),

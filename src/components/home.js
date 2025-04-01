@@ -62,7 +62,7 @@ const Home = ({handleLogout}) => {
 
         setLoading(true);
         try {
-            const response = await fetch(`${SERVER_RENDER}/music/generate-music`, {
+            const response = await fetch(`${SERVER_RENDER}/generate-music`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
